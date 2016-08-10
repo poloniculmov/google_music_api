@@ -21,5 +21,28 @@ module GoogleMusicApi
       true
     end
 
+    def is_subscribed?
+      url = 'config'
+      options = { query: {dv: 0} }
+
+      subscribed = make_get_request(url, options)['data']['entries'].find do |item|
+        item['key'] == 'isNautilusUser' && item['value'] == 'true'
+      end
+
+      !subscribed.nil?
+    end
+
+    private
+
+    def authorization_token
+      @authorization_token
+    end
+
+    def make_get_request(url, options)
+      url ="#{SERVICE_ENDPOINT}#{url}"
+      options[:headers] = { 'Authorization': 'GoogleLogin auth='+authorization_token}
+      HTTParty.get(url, options).parsed_response
+    end
+
   end
 end
