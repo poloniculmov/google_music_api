@@ -32,6 +32,16 @@ module GoogleMusicApi
       !subscribed.nil?
     end
 
+    def get_genres(parent_id = nil)
+      url = 'explore/genres'
+
+      options = {}
+      options[:query] = {'parent-genre': parent_id} if parent_id
+
+
+      make_get_request(url, options)['genres']
+    end
+
     private
 
     def authorization_token
