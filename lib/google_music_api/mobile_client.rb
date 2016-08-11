@@ -86,7 +86,6 @@ module GoogleMusicApi
       }]
       }.to_json
       }
-
       make_post_request(url, options)
     end
 
@@ -113,6 +112,33 @@ module GoogleMusicApi
       make_post_request(url, options)
     end
 
+    def get_all_stations
+      url = 'radio/station'
+      options = {query: {'alt': 'json', 'tier': 'aa', 'hl':'en_US'}}
+
+      make_post_request(url, options)
+    end
+
+    def get_station_tracks(station_id, number_of_tracks: 25, recently_played:[])
+      url = 'radio/stationfeed'
+      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl':'en_US'}}
+
+      options[:body] = {'contentFilter': 1,
+       'stations': [
+           {
+               'numEntries': number_of_tracks,
+               'radioId': station_id,
+               'recentlyPlayed': recently_played.map { |rec| add_track_type rec }
+           }
+       ]}.to_json
+
+      make_post_request(url, options)
+    end
+
+    def get_im_feeling_lucky_tracks(number_of_tracks:25, recently_played:[])
+      get_station_tracks 'IFL', number_of_tracks: number_of_tracks, recently_played: recently_played
+    end
+
     private
 
     def authorization_token
@@ -130,6 +156,14 @@ module GoogleMusicApi
       options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token, 'Content-Type': 'application/json'}
 
       HTTParty.post(url, options).parsed_response
+    end
+
+    def add_track_type(track_id)
+        if track_id[0] == 'T'
+            return {'id': track_id, 'type': 1}
+        else
+            return {'id': track_id, 'type': 0}
+        end
     end
 
   end
