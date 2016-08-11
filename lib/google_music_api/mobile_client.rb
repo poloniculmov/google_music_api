@@ -167,6 +167,18 @@ module GoogleMusicApi
       make_get_request(url, options)
     end
 
+    def get_track_info(track_id)
+      url = 'fetchtrack'
+
+      options = {
+          query: {
+              nid: track_id
+          }
+      }
+
+      make_get_request url, options
+    end
+
     private
 
     def authorization_token
