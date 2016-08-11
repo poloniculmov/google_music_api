@@ -23,7 +23,7 @@ module GoogleMusicApi
 
     def is_subscribed?
       url = 'config'
-      options = { query: {dv: 0} }
+      options = {query: {dv: 0}}
 
       subscribed = make_get_request(url, options)['data']['entries'].find do |item|
         item['key'] == 'isNautilusUser' && item['value'] == 'true'
@@ -42,6 +42,25 @@ module GoogleMusicApi
       make_get_request(url, options)['genres']
     end
 
+    def search(query, max_results: 50)
+      url = 'query'
+
+      # The result types returned are requested in the `ct` parameter.
+      # Free account search is restricted so may not contain hits for all result types.
+      # 1: Song, 2: Artist, 3: Album, 4: Playlist, 6: Station, 7: Situation, 8: Video
+
+      options = {
+          query: {
+              'ct': '1,2,3,4,6,7,8',
+              'q': query,
+              'max-results': max_results
+          }
+      }
+
+      make_get_request(url, options)['entries']
+    end
+
+
     private
 
     def authorization_token
@@ -50,7 +69,7 @@ module GoogleMusicApi
 
     def make_get_request(url, options)
       url ="#{SERVICE_ENDPOINT}#{url}"
-      options[:headers] = { 'Authorization': 'GoogleLogin auth='+authorization_token}
+      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token}
       HTTParty.get(url, options).parsed_response
     end
 
