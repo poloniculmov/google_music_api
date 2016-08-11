@@ -154,7 +154,18 @@ module GoogleMusicApi
       make_get_request(url, options)
     end
 
-    
+    def  get_album_info(album_id, include_tracks = true)
+      url = 'fetchalbum'
+
+      options = {
+          query: {
+              nid: album_id,
+              'include-tracks': include_tracks
+          }
+      }
+
+      make_get_request(url, options)
+    end
 
     private
 
