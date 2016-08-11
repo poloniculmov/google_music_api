@@ -90,6 +90,18 @@ module GoogleMusicApi
       make_post_request(url, options)
     end
 
+    def get_promoted_songs
+      url = 'ephemeral/top'
+
+      make_post_request(url)
+    end
+
+    def get_listen_now_items
+      url = 'listennow/getlistennowitems'
+      options = {'alt': 'json'}
+
+      make_get_request(url)
+    end
 
     private
 
