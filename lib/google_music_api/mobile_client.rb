@@ -60,6 +60,12 @@ module GoogleMusicApi
       make_get_request(url, options)['entries']
     end
 
+    def get_all_tracks
+      url = 'trackfeed'
+
+      make_post_request(url)
+    end
+
 
     private
 
@@ -67,10 +73,17 @@ module GoogleMusicApi
       @authorization_token
     end
 
-    def make_get_request(url, options)
+    def make_get_request(url, options = {})
       url ="#{SERVICE_ENDPOINT}#{url}"
       options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token}
       HTTParty.get(url, options).parsed_response
+    end
+
+    def make_post_request(url, options = {})
+      url ="#{SERVICE_ENDPOINT}#{url}"
+      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token}
+
+      HTTParty.post(url, options).parsed_response
     end
 
   end
