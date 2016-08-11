@@ -81,8 +81,9 @@ module GoogleMusicApi
     def get_shared_playlists_entries(share_token)
       url = 'plentries/shared'
 
-      options = {body: {
+      options = {body: { entries: [{
           shareToken: share_token
+      }]
       }.to_json
       }
 
