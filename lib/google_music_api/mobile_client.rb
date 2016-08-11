@@ -103,6 +103,16 @@ module GoogleMusicApi
       make_get_request(url)
     end
 
+    def get_listen_now_situations()
+      url = 'listennow/situations'
+      options = {query: {'alt': 'json', 'tier': 'aa', 'hl':'en_US'}}
+
+      body = {'requestSignals': {'timeZoneOffsetSecs': Time.now.gmt_offset}}.to_json
+
+      options[:body] = body
+      make_post_request(url, options)
+    end
+
     private
 
     def authorization_token
