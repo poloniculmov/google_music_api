@@ -66,6 +66,29 @@ module GoogleMusicApi
       make_post_request(url)
     end
 
+    def get_all_playlists
+      url = 'playlistfeed'
+
+      make_post_request(url)
+    end
+
+    def get_own_playlists_entries
+      url = 'plentryfeed'
+
+      make_post_request(url)
+    end
+
+    def get_shared_playlists_entries(share_token)
+      url = 'plentries/shared'
+
+      options = {body: {
+          shareToken: share_token
+      }.to_json
+      }
+
+      make_post_request(url, options)
+    end
+
 
     private
 
@@ -81,7 +104,7 @@ module GoogleMusicApi
 
     def make_post_request(url, options = {})
       url ="#{SERVICE_ENDPOINT}#{url}"
-      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token}
+      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token, 'Content-Type': 'application/json'}
 
       HTTParty.post(url, options).parsed_response
     end
