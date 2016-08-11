@@ -81,9 +81,9 @@ module GoogleMusicApi
     def get_shared_playlists_entries(share_token)
       url = 'plentries/shared'
 
-      options = {body: { entries: [{
-          shareToken: share_token
-      }]
+      options = {body: {entries: [{
+                                      shareToken: share_token
+                                  }]
       }.to_json
       }
       make_post_request(url, options)
@@ -104,7 +104,7 @@ module GoogleMusicApi
 
     def get_listen_now_situations()
       url = 'listennow/situations'
-      options = {query: {'alt': 'json', 'tier': 'aa', 'hl':'en_US'}}
+      options = {query: {'alt': 'json', 'tier': 'aa', 'hl': 'en_US'}}
 
       body = {'requestSignals': {'timeZoneOffsetSecs': Time.now.gmt_offset}}.to_json
 
@@ -114,30 +114,47 @@ module GoogleMusicApi
 
     def get_all_stations
       url = 'radio/station'
-      options = {query: {'alt': 'json', 'tier': 'aa', 'hl':'en_US'}}
+      options = {query: {'alt': 'json', 'tier': 'aa', 'hl': 'en_US'}}
 
       make_post_request(url, options)
     end
 
-    def get_station_tracks(station_id, number_of_tracks: 25, recently_played:[])
+    def get_station_tracks(station_id, number_of_tracks: 25, recently_played: [])
       url = 'radio/stationfeed'
-      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl':'en_US'}}
+      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl': 'en_US'}}
 
       options[:body] = {'contentFilter': 1,
-       'stations': [
-           {
-               'numEntries': number_of_tracks,
-               'radioId': station_id,
-               'recentlyPlayed': recently_played.map { |rec| add_track_type rec }
-           }
-       ]}.to_json
+                        'stations': [
+                            {
+                                'numEntries': number_of_tracks,
+                                'radioId': station_id,
+                                'recentlyPlayed': recently_played.map { |rec| add_track_type rec }
+                            }
+                        ]}.to_json
 
       make_post_request(url, options)
     end
 
-    def get_im_feeling_lucky_tracks(number_of_tracks:25, recently_played:[])
+    def get_im_feeling_lucky_tracks(number_of_tracks: 25, recently_played: [])
       get_station_tracks 'IFL', number_of_tracks: number_of_tracks, recently_played: recently_played
     end
+
+    def get_artist_info(artist_id, include_albums = true, max_top_tracks = 5, max_related_artists = 5)
+      url = 'fetchartist'
+
+      options = {
+          query: {
+              nid: artist_id,
+              'include-albums': include_albums,
+              'num-top-tracks': max_top_tracks,
+              'num-related-artists': max_related_artists
+          }
+      }
+
+      make_get_request(url, options)
+    end
+
+    
 
     private
 
@@ -159,11 +176,11 @@ module GoogleMusicApi
     end
 
     def add_track_type(track_id)
-        if track_id[0] == 'T'
-            return {'id': track_id, 'type': 1}
-        else
-            return {'id': track_id, 'type': 0}
-        end
+      if track_id[0] == 'T'
+        return {'id': track_id, 'type': 1}
+      else
+        return {'id': track_id, 'type': 0}
+      end
     end
 
   end
