@@ -289,6 +289,45 @@ module GoogleMusicApi
 
     end
 
+    def add_tracks_to_playlist(playlist_id, track_ids= [])
+      #TODO: Fix this. It returns OK but changes don't seem to be made
+      url = 'plentriesbatch'
+      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl': 'en_US'}}
+
+
+      prev_id, cur_id, next_id = nil, SecureRandom.uuid, SecureRandom.uuid
+
+      mutations = []
+      track_ids.each_with_index do |value, index|
+        m_details = {
+            clientId: cur_id,
+            creationTimestamp: '-1',
+            deleted: false,
+            lastModifiedTimestamp: '0',
+            playlistId: playlist_id,
+            source: 1,
+            trackId: value,
+        }
+
+        m_details[:source] = 2 if value[0] == 'T'
+
+        m_details[:precedingEntryId] = prev_id if index > 0
+
+        #m_details[:followingEntryId] = next_id if index < value.length - 1
+
+        mutations << {create: m_details}
+
+        prev_id, cur_id, next_id = cur_id, next_id, SecureRandom.uuid
+      end
+
+
+      options[:body] = {mutations: mutations}.to_json
+
+      make_post_request(url, options)
+
+
+    end
+
     private
 
     def authorization_token
