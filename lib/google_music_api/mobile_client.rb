@@ -154,7 +154,7 @@ module GoogleMusicApi
       make_get_request(url, options)
     end
 
-    def  get_album_info(album_id, include_tracks = true)
+    def get_album_info(album_id, include_tracks = true)
       url = 'fetchalbum'
 
       options = {
@@ -197,13 +197,13 @@ module GoogleMusicApi
       }
 
       options[:body] = {
-        track_stats: [{
-            id: song_id,
-            incremental_plays: number_of_plays,
-            last_play_time_millis: play_timestamp,
-            type: song_id[0] == 'T' ? 2 : 1,
-            track_events: [event] * number_of_plays
-                      }]
+          track_stats: [{
+                            id: song_id,
+                            incremental_plays: number_of_plays,
+                            last_play_time_millis: play_timestamp,
+                            type: song_id[0] == 'T' ? 2 : 1,
+                            track_events: [event] * number_of_plays
+                        }]
       }.to_json
 
       make_post_request url, options
@@ -216,11 +216,10 @@ module GoogleMusicApi
     end
 
     def create_playlist(name, description = '', public = false)
-      create_playlists[{name: name, description: description, public: public}]
+      create_playlists [{name: name, description: description, public: public}]
     end
 
     def create_playlists(playlist_descriptions = [])
-
       url = 'playlistbatch'
 
       creates = playlist_descriptions.map do |pd|
@@ -232,7 +231,7 @@ module GoogleMusicApi
                 name: pd[:name],
                 description: pd[:description],
                 type: 'USER_GENERATED',
-                shareState: (pd[:public]  ? 'PUBLIC' : 'PRIVATE'),
+                shareState: (pd[:public] ? 'PUBLIC' : 'PRIVATE')
             }
         }
       end
@@ -240,6 +239,32 @@ module GoogleMusicApi
       options = {
           body: {mutations: creates}.to_json
       }
+      make_post_request(url, options)
+    end
+
+    def update_playlist(id, new_name = nil, new_description = nil, new_public = nil)
+      update_playlists [{id: id, name: new_name, description: new_description, public: new_public}]
+    end
+
+    def update_playlists(playlist_descriptions = [])
+      #TODO - checkout the conflict issue
+      url = 'playlistbatch'
+
+      updates = playlist_descriptions.map do |pd|
+        {
+            update: {
+                id: pd[:id],
+                name: pd[:name],
+                description: pd[:description],
+                shareState: (pd[:public] ? 'PUBLIC' : 'PRIVATE')
+            }
+        }
+      end
+
+      options = {
+          body: {mutations: updates}.to_json
+      }
+
       make_post_request(url, options)
     end
 
@@ -258,7 +283,6 @@ module GoogleMusicApi
     def make_post_request(url, options = {})
       url ="#{SERVICE_ENDPOINT}#{url}"
       options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token, 'Content-Type': 'application/json'}
-      
       HTTParty.post(url, options).parsed_response
     end
 
