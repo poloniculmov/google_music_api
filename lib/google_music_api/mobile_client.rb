@@ -268,6 +268,27 @@ module GoogleMusicApi
       make_post_request(url, options)
     end
 
+    def delete_playlist(id)
+      delete_playlists [id]
+    end
+
+    def delete_playlists(ids = [])
+      url = 'playlistbatch'
+
+      deletes = ids.map do |pd|
+        {
+           delete: pd
+        }
+      end
+
+      options = {
+          body: {mutations: deletes}.to_json
+      }
+
+      make_post_request(url, options)
+
+    end
+
     private
 
     def authorization_token
