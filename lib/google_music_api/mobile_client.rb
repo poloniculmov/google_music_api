@@ -179,6 +179,36 @@ module GoogleMusicApi
       make_get_request url, options
     end
 
+
+    def increase_track_play_count(song_id, number_of_plays = 1, play_time = Time.now)
+      url = 'trackstats'
+
+      options = {
+          query: {
+              alt: 'json'
+          }
+      }
+
+      play_timestamp = (play_time.to_f * 1000).to_i
+      event = {
+          context_type: 1,
+          event_timestamp_micros: play_timestamp,
+          event_type: 2
+      }
+
+      options[:body] = {
+        track_stats: [{
+            id: song_id,
+            incremental_plays: number_of_plays,
+            last_play_time_millis: play_timestamp,
+            type: song_id[0] == 'T' ? 2 : 1,
+            track_events: [event] * number_of_plays
+                      }]
+      }.to_json
+
+      make_post_request url, options
+    end
+
     private
 
     def authorization_token
