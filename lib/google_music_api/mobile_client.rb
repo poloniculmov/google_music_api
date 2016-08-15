@@ -209,6 +209,40 @@ module GoogleMusicApi
       make_post_request url, options
     end
 
+    def add_tracks_to_library(song_ids = [])
+      #TODO: Implement after adding Hashie support as this needs an extra call
+      url = 'trackbatch'
+
+    end
+
+    def create_playlist(name, description = '', public = false)
+      create_playlists[{name: name, description: description, public: public}]
+    end
+
+    def create_playlists(playlist_descriptions = [])
+
+      url = 'playlistbatch'
+
+      creates = playlist_descriptions.map do |pd|
+        {
+            create: {
+                creationTimestamp: '-1',
+                deleted: false,
+                lastModifiedTimestamp: '0',
+                name: pd[:name],
+                description: pd[:description],
+                type: 'USER_GENERATED',
+                shareState: (pd[:public]  ? 'PUBLIC' : 'PRIVATE'),
+            }
+        }
+      end
+
+      options = {
+          body: {mutations: creates}.to_json
+      }
+      make_post_request(url, options)
+    end
+
     private
 
     def authorization_token
@@ -224,7 +258,7 @@ module GoogleMusicApi
     def make_post_request(url, options = {})
       url ="#{SERVICE_ENDPOINT}#{url}"
       options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token, 'Content-Type': 'application/json'}
-
+      
       HTTParty.post(url, options).parsed_response
     end
 
