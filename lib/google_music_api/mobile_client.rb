@@ -213,6 +213,7 @@ module GoogleMusicApi
       #TODO: Implement after adding Hashie support as this needs an extra call
       url = 'trackbatch'
 
+      throw NotImplementedError.new
     end
 
     def create_playlist(name, description = '', public = false)
@@ -340,6 +341,20 @@ module GoogleMusicApi
 
       make_post_request url, options
     end
+
+    def reorder_playlist_entry
+      throw NotImplementedError.new
+    end
+
+    def create_station
+      throw NotImplementedError.new
+    end
+
+    def delete_station
+      throw NotImplementedError.new
+    end
+
+
 
     private
 
