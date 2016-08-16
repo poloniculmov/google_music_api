@@ -10,5 +10,14 @@ require "google_music_api"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+require 'pry'
+require 'google_music_api'
+
+def reload!
+  # Change 'gem_name' here too:
+  files = $LOADED_FEATURES.select { |feat| feat =~ /\/google_music_api\// }
+  files.each { |file| load file }
+end
+
+ARGV.clear
+Pry.start
