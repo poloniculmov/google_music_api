@@ -242,12 +242,12 @@ module GoogleMusicApi
       make_post_request(url, options)
     end
 
+    # It should be the actual id, not the share token.
     def update_playlist(id, new_name = nil, new_description = nil, new_public = nil)
       update_playlists [{id: id, name: new_name, description: new_description, public: new_public}]
     end
 
     def update_playlists(playlist_descriptions = [])
-      #TODO - checkout the conflict issue
       url = 'playlistbatch'
 
       updates = playlist_descriptions.map do |pd|
@@ -289,8 +289,8 @@ module GoogleMusicApi
 
     end
 
+    # It should be the actual id, not the share token.
     def add_tracks_to_playlist(playlist_id, track_ids= [])
-      #TODO: Fix this. It returns OK but changes don't seem to be made
       url = 'plentriesbatch'
       options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl': 'en_US'}}
 
@@ -313,7 +313,7 @@ module GoogleMusicApi
 
         m_details[:precedingEntryId] = prev_id if index > 0
 
-        #m_details[:followingEntryId] = next_id if index < value.length - 1
+        m_details[:followingEntryId] = next_id if index < value.length - 1
 
         mutations << {create: m_details}
 
