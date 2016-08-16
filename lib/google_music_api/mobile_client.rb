@@ -247,7 +247,7 @@ module GoogleMusicApi
       update_playlists [{id: id, name: new_name, description: new_description, public: new_public}]
     end
 
-    def update_playlists(playlist_descriptions = [])
+    def update_playlists(playlist_descriptions)
       url = 'playlistbatch'
 
       updates = playlist_descriptions.map do |pd|
@@ -290,9 +290,9 @@ module GoogleMusicApi
     end
 
     # It should be the actual id, not the share token.
-    def add_tracks_to_playlist(playlist_id, track_ids= [])
+    def add_tracks_to_playlist(playlist_id, track_ids)
       url = 'plentriesbatch'
-      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl': 'en_US'}}
+      options = {}
 
 
       prev_id, cur_id, next_id = nil, SecureRandom.uuid, SecureRandom.uuid
@@ -324,8 +324,21 @@ module GoogleMusicApi
       options[:body] = {mutations: mutations}.to_json
 
       make_post_request(url, options)
+    end
 
 
+    #it has to be a playlist entry id, not a track id
+    def remove_tracks_from_playlist(playlist_entry_ids)
+      url = 'plentriesbatch'
+
+      mutations = playlist_entry_ids.map { |id| {delete: id}}
+      options = {
+          body: {
+              mutations: mutations
+          }.to_json
+      }
+
+      make_post_request url, options
     end
 
     private
@@ -348,9 +361,9 @@ module GoogleMusicApi
 
     def add_track_type(track_id)
       if track_id[0] == 'T'
-        return {'id': track_id, 'type': 1}
+        {'id': track_id, 'type': 1}
       else
-        return {'id': track_id, 'type': 0}
+        {'id': track_id, 'type': 0}
       end
     end
 
