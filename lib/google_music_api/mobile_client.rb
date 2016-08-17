@@ -1,5 +1,7 @@
 require 'gpsoauth'
 require 'google_music_api/http'
+require 'google_music_api/genre'
+require 'google_music_api/playlist'
 
 module GoogleMusicApi
   class MobileClient
@@ -11,6 +13,8 @@ module GoogleMusicApi
     SERVICE_ENDPOINT = 'https://mclients.googleapis.com/sj/v2.4/'
 
     include Http
+    include Genre
+    include Plalist
 
 
 
@@ -54,15 +58,6 @@ module GoogleMusicApi
       !subscribed.nil?
     end
 
-    def get_genres(parent_id = nil)
-      url = 'explore/genres'
-
-      options = {}
-      options[:query] = {'parent-genre': parent_id} if parent_id
-
-
-      make_get_request(url, options)['genres']
-    end
 
     def search(query, max_results: 50)
       url = 'query'
