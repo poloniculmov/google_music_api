@@ -25,7 +25,7 @@ module GoogleMusicApi
     end
 
     def authenticated?
-      @authorization_token
+      !!@authorization_token
     end
 
     def is_subscribed?
