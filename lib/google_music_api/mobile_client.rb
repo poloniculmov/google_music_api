@@ -13,6 +13,17 @@ module GoogleMusicApi
     include Http
 
 
+
+    # Logs in to Google using OAuth and obtains an authorization token
+    #
+    # @param email [String] your email
+    # @param [String] password you password
+    # @param [String] android_id 16 hex digits, eg '1234567890abcdef'
+    # @param [String] device_country the country code of the device you're impersonating, default = 'us'
+    # @param [String] operator_country the country code of the device's mobile operator, default = 'us'
+    #
+    # @raise [AuthenticationError] if authentication fails
+    # @return true if success
     def login(email, password, android_id, device_country='us', operator_country='us')
       g = Gpsoauth::Client.new(android_id, 'ac2dm', device_country, operator_country)
 
@@ -24,6 +35,8 @@ module GoogleMusicApi
       true
     end
 
+    # Checks if there's an authorization token present
+    # @return [boolean]
     def authenticated?
       !!@authorization_token
     end
