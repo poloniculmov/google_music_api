@@ -32,4 +32,21 @@ describe GoogleMusicApi::MobileClient do
       expect(api.authenticated?).to be_truthy
     end
   end
+
+  describe '#subscribed?' do
+    it 'returns true if subscribed' do
+      stub_request(:get, 'https://mclients.googleapis.com/sj/v2.4/config?dv=0').
+          to_return(:status => 200, :body => File.read(File.expand_path('../webmocks/', __FILE__) + '/subscribed.json'), :headers => {'Content-Type': 'application/json'})
+
+      expect(api.subscribed?).to be_truthy
+    end
+
+    it 'returns false if unsubscribed' do
+      stub_request(:get, 'https://mclients.googleapis.com/sj/v2.4/config?dv=0').
+          to_return(:status => 200, :body => File.read(File.expand_path('../webmocks/', __FILE__) + '/unsubscribed.json'), :headers => {'Content-Type': 'application/json'})
+
+      expect(api.subscribed?).to be_falsey
+
+    end
+  end
 end

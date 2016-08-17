@@ -1,0 +1,437 @@
+{
+  "kind": "sj#configList",
+  "data": {
+    "entries": [
+      {
+        "kind": "sj#configEntry",
+        "key": "canManageFP",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "purchaseAccess",
+        "value": "3"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "sideloadedPlaybackLogging",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isWarmWelcomeDisabledForWoodstock",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isPBEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "forceSignupFlow",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isNautilusUser",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isLNEnabled",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "canCancelSubscription",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "ytContent",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "nashvillebg",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "partridgeAccess",
+        "value": "1"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isVsAvailable",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "warmWelcomeButtonText",
+        "value": "LISTEN_NOW"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "appstoreRatingPrompt",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "nautilusExpirationTimeMs",
+        "value": "1473261082207"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isTrAvailable",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isInAppMessageEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "disableInfoCardsOnDayOne",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "searchClusterResponseEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableWsExtras",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "topListMaxSize",
+        "value": "1000"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "manageFPBackendId",
+        "value": "2"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "shouldBlockSHSuggestion",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "showLMark",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "conciergeListenNow",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "minimumAppStartCountForFreeUpsell",
+        "value": "6"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isExplicitRestrictedByPControl",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isAnyServiceAvailable",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "pieDayOneCard",
+        "value": "NO_EXPERIMENT"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "showYoutubeRedInfoCard",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isAcceptedUser",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "concListenNow",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "wsAccess",
+        "value": "1"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "instantSearchDelay",
+        "value": "300"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isPodcastSyncEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "topListUpdatePeriodSeconds",
+        "value": "604800"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "situationsResponseTTLMinutes",
+        "value": "30"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isPlSharingEnabled",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "showLNInSettings",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "ytSubscriptionAccess",
+        "value": "1"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "partridgeManagement",
+        "value": "1"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isDeviceVersionBlacklisted",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "minimumGsaVersionRequiredForSoundSearch",
+        "value": "300407000"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "topListPageSize",
+        "value": "100"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isHallmarkEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isSoundSearchEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "uploadAccess",
+        "value": "3"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isNautilusAvailable",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "nautilusAccess",
+        "value": "3"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "manageFPDocType",
+        "value": "15"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isQuizEnabledForWoodstockOnSignup",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "searchClientMaxResults",
+        "value": "100"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "hasPControlSettings",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isInstantSearchEnabled",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "hasNewUserQuizPermission",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableCQ",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosRadioDownloadsAlwaysUseDownloadedSongs",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableAndroidDialCloudQueue",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableStreamInterception",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableHttpsAlbumArt",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosRadioDownloadsBatchSize",
+        "value": "25"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableSonos",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableDGEvaluation",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iOSEnableFullWidthSearchBar",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "persistentSubscriptionTrackUserLimit",
+        "value": "100001"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isUpgradeTempCacheForKeeponEnabled",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosRadioDownloadsReadyPercent",
+        "value": "80"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableStructuredLogging",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosHashCastAppContext",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "shouldValidateMediaRoutes",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "mediaRoutePackageSignatures",
+        "value": "[{\"packages\": [\"com.google.android.music\", \"com.google.android.setupwarlock\", \"com.google.android.gms\"], \"sha1s\": [\"38918A453D07199354F8B19AF05EC6562CED5788\", \"58E1C4133F7441EC3D2C270270A14802DA47BA0E\"]}, {\"packages\": [\"com.sonos.acr\"], \"sha1s\": [\"7387C9EB17CC5972F2B2FDF3E192884A78F24E7E\", \"62E2D848EF6FD0F8978F650D5DF9605786E26673\", \"9407A78494B106461537E1FC4E5D877E5ABCC7B3\", \"B6EA208733731F0CA8A123155830457C876130C4\", \"B703697E509B186616D83E978064A7A4F8D18775\"]}]"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableOnePushSync",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableMpsOverride",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "autoDogfoodStackCandidate",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableAndroidChromecastCloudQueue",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableOkHttp",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "castReceiverAppId",
+        "value": "2872939A"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableRadioDownloads",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableWoodstockCloudQueue",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "isSyncLoggingEnabled",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosRadioDownloadsEagerRefill",
+        "value": "false"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableAndroidChromecastCloudQueueWoodstock",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "iosEnableBackgroundDownloading",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "enableFallbackForShortUrls",
+        "value": "true"
+      },
+      {
+        "kind": "sj#configEntry",
+        "key": "askForNautilusCancellationReason",
+        "value": "true"
+      }
+    ]
+  }
+}

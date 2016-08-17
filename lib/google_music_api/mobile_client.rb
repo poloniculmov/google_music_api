@@ -41,7 +41,9 @@ module GoogleMusicApi
       !!@authorization_token
     end
 
-    def is_subscribed?
+    # Checks whether the user is subscribed or not
+    # @return [boolean] 
+    def subscribed?
       url = 'config'
       options = {query: {dv: 0}}
 
