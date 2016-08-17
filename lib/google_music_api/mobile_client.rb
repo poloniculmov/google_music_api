@@ -1,4 +1,5 @@
 require 'gpsoauth'
+require 'google_music_api/http'
 
 module GoogleMusicApi
   class MobileClient
@@ -9,16 +10,22 @@ module GoogleMusicApi
 
     SERVICE_ENDPOINT = 'https://mclients.googleapis.com/sj/v2.4/'
 
+    include Http
 
-    def login(email, password)
 
-      g = Gpsoauth::Client.new('123das7809ffabde', 'ac2dm', 'ro', 'ro')
+    def login(email, password, android_id, device_country='us', operator_country='us')
+      g = Gpsoauth::Client.new(android_id, 'ac2dm', device_country, operator_country)
+
       response = g.master_login(email, password)
-      oauth_response = g.oauth(email, response["Token"], SERVICE, APP, CLIENT_SIGNATURE)
+      oauth_response = g.oauth(email, response['Token'], SERVICE, APP, CLIENT_SIGNATURE)
 
-      @authorization_token = oauth_response["Auth"]
-
+      raise AuthenticationError.new('Invalid username/password') unless oauth_response.key?('Auth')
+      @authorization_token = oauth_response['Auth']
       true
+    end
+
+    def authenticated?
+      @authorization_token
     end
 
     def is_subscribed?
@@ -360,18 +367,6 @@ module GoogleMusicApi
 
     def authorization_token
       @authorization_token
-    end
-
-    def make_get_request(url, options = {})
-      url ="#{SERVICE_ENDPOINT}#{url}"
-      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token}
-      HTTParty.get(url, options).parsed_response
-    end
-
-    def make_post_request(url, options = {})
-      url ="#{SERVICE_ENDPOINT}#{url}"
-      options[:headers] = {'Authorization': 'GoogleLogin auth='+authorization_token, 'Content-Type': 'application/json'}
-      HTTParty.post(url, options).parsed_response
     end
 
     def add_track_type(track_id)
