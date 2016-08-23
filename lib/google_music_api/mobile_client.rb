@@ -3,6 +3,7 @@ require 'google_music_api/http'
 require 'google_music_api/genre'
 require 'google_music_api/playlist'
 require 'google_music_api/library'
+require 'google_music_api/station'
 
 module GoogleMusicApi
   class MobileClient
@@ -17,6 +18,7 @@ module GoogleMusicApi
     include Genre
     include Playlist
     include Library
+    include Station
 
 
 
@@ -79,42 +81,7 @@ module GoogleMusicApi
       make_get_request(url, options)['entries']
     end
 
-    def get_listen_now_situations
-      url = 'listennow/situations'
-      options = {query: {'alt': 'json', 'tier': 'aa', 'hl': 'en_US'}}
 
-      body = {'requestSignals': {'timeZoneOffsetSecs': Time.now.gmt_offset}}.to_json
-
-      options[:body] = body
-      make_post_request(url, options)
-    end
-
-    def get_all_stations
-      url = 'radio/station'
-      options = {query: {'alt': 'json', 'tier': 'aa', 'hl': 'en_US'}}
-
-      make_post_request(url, options)
-    end
-
-    def get_station_tracks(station_id, number_of_tracks: 25, recently_played: [])
-      url = 'radio/stationfeed'
-      options = {query: {'alt': 'json', 'include-tracks': 'true', 'tier': 'aa', 'hl': 'en_US'}}
-
-      options[:body] = {'contentFilter': 1,
-                        'stations': [
-                            {
-                                'numEntries': number_of_tracks,
-                                'radioId': station_id,
-                                'recentlyPlayed': recently_played.map { |rec| add_track_type rec }
-                            }
-                        ]}.to_json
-
-      make_post_request(url, options)
-    end
-
-    def get_im_feeling_lucky_tracks(number_of_tracks: 25, recently_played: [])
-      get_station_tracks 'IFL', number_of_tracks: number_of_tracks, recently_played: recently_played
-    end
 
     def get_artist_info(artist_id, include_albums = true, max_top_tracks = 5, max_related_artists = 5)
       url = 'fetchartist'
@@ -185,17 +152,6 @@ module GoogleMusicApi
 
       make_post_request url, options
     end
-
-
-
-    def create_station
-      throw NotImplementedError.new
-    end
-
-    def delete_station
-      throw NotImplementedError.new
-    end
-
 
     def authorization_token
       @authorization_token
