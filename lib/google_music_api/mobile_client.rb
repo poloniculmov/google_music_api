@@ -4,6 +4,9 @@ require 'google_music_api/genre'
 require 'google_music_api/playlist'
 require 'google_music_api/library'
 require 'google_music_api/station'
+require 'google_music_api/album'
+require 'google_music_api/artist'
+require 'google_music_api/track'
 
 module GoogleMusicApi
   class MobileClient
@@ -19,7 +22,15 @@ module GoogleMusicApi
     include Playlist
     include Library
     include Station
+    include Album
+    include Artist
+    include Track
 
+    #Pass an authorization token and you won't have to login
+    # @param [string] authorization_token
+    def initialize(authorization_token = nil)
+      @authorization_token = authorization_token
+    end
 
 
     # Logs in to Google using OAuth and obtains an authorization token
@@ -62,95 +73,23 @@ module GoogleMusicApi
       !subscribed.nil?
     end
 
-
-    def search(query, max_results: 50)
+    #Generic search
+    # 1: Song, 2: Artist, 3: Album, 4: Playlist, 6: Station, 7: Situation, 8: Video
+    # @param [string] query
+    # @param [string] ct Used to restrict search to specific items, comma-separated list of item type ids.
+    # @param [integer] max_results
+    def search(query, ct = '1,2,3,4,6,7,8', max_results = 50)
       url = 'query'
-
-      # The result types returned are requested in the `ct` parameter.
-      # Free account search is restricted so may not contain hits for all result types.
-      # 1: Song, 2: Artist, 3: Album, 4: Playlist, 6: Station, 7: Situation, 8: Video
 
       options = {
           query: {
-              'ct': '1,2,3,4,6,7,8',
+              'ct': ct,
               'q': query,
               'max-results': max_results
           }
       }
 
       make_get_request(url, options)['entries']
-    end
-
-
-
-    def get_artist_info(artist_id, include_albums = true, max_top_tracks = 5, max_related_artists = 5)
-      url = 'fetchartist'
-
-      options = {
-          query: {
-              nid: artist_id,
-              'include-albums': include_albums,
-              'num-top-tracks': max_top_tracks,
-              'num-related-artists': max_related_artists
-          }
-      }
-
-      make_get_request(url, options)
-    end
-
-    def get_album_info(album_id, include_tracks = true)
-      url = 'fetchalbum'
-
-      options = {
-          query: {
-              nid: album_id,
-              'include-tracks': include_tracks
-          }
-      }
-
-      make_get_request(url, options)
-    end
-
-    def get_track_info(track_id)
-      url = 'fetchtrack'
-
-      options = {
-          query: {
-              nid: track_id
-          }
-      }
-
-      make_get_request url, options
-    end
-
-
-    def increase_track_play_count(song_id, number_of_plays = 1, play_time = Time.now)
-      url = 'trackstats'
-
-      options = {
-          query: {
-              alt: 'json'
-          }
-      }
-
-      play_timestamp = (play_time.to_f * 1000).to_i
-      event = {
-          context_type: 1,
-          event_timestamp_micros: play_timestamp,
-          event_type: 2
-      }
-
-      options[:body] = {
-          track_stats: [{
-                            id: song_id,
-                            incremental_plays: number_of_plays,
-                            last_play_time_millis: play_timestamp,
-                            type: song_id[0] == 'T' ? 2 : 1,
-                            track_events: [event] * number_of_plays
-                        }]
-      }.to_json
-
-      make_post_request url, options
     end
 
     def authorization_token
