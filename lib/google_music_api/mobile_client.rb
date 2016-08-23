@@ -2,6 +2,7 @@ require 'gpsoauth'
 require 'google_music_api/http'
 require 'google_music_api/genre'
 require 'google_music_api/playlist'
+require 'google_music_api/library'
 
 module GoogleMusicApi
   class MobileClient
@@ -15,6 +16,7 @@ module GoogleMusicApi
     include Http
     include Genre
     include Playlist
+    include Library
 
 
 
@@ -77,26 +79,7 @@ module GoogleMusicApi
       make_get_request(url, options)['entries']
     end
 
-    def get_all_tracks
-      url = 'trackfeed'
-
-      make_post_request(url)
-    end
-
-    def get_promoted_songs
-      url = 'ephemeral/top'
-
-      make_post_request(url)
-    end
-
-    def get_listen_now_items
-      url = 'listennow/getlistennowitems'
-      options = {'alt': 'json'}
-
-      make_get_request(url)
-    end
-
-    def get_listen_now_situations()
+    def get_listen_now_situations
       url = 'listennow/situations'
       options = {query: {'alt': 'json', 'tier': 'aa', 'hl': 'en_US'}}
 
@@ -203,12 +186,6 @@ module GoogleMusicApi
       make_post_request url, options
     end
 
-    def add_tracks_to_library(song_ids = [])
-      #TODO: Implement after adding Hashie support as this needs an extra call
-      url = 'trackbatch'
-
-      throw NotImplementedError.new
-    end
 
 
     def create_station
@@ -219,9 +196,6 @@ module GoogleMusicApi
       throw NotImplementedError.new
     end
 
-
-
-    private
 
     def authorization_token
       @authorization_token
