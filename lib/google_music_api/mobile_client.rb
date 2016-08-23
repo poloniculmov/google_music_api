@@ -14,7 +14,7 @@ module GoogleMusicApi
 
     include Http
     include Genre
-    include Plalist
+    include Playlist
 
 
 
@@ -46,7 +46,7 @@ module GoogleMusicApi
     end
 
     # Checks whether the user is subscribed or not
-    # @return [boolean] 
+    # @return [boolean]
     def subscribed?
       url = 'config'
       options = {query: {dv: 0}}
@@ -81,29 +81,6 @@ module GoogleMusicApi
       url = 'trackfeed'
 
       make_post_request(url)
-    end
-
-    def get_all_playlists
-      url = 'playlistfeed'
-
-      make_post_request(url)
-    end
-
-    def get_own_playlists_entries
-      url = 'plentryfeed'
-
-      make_post_request(url)
-    end
-
-    def get_shared_playlists_entries(share_token)
-      url = 'plentries/shared'
-
-      options = {body: {entries: [{
-                                      shareToken: share_token
-                                  }]
-      }.to_json
-      }
-      make_post_request(url, options)
     end
 
     def get_promoted_songs
@@ -233,135 +210,6 @@ module GoogleMusicApi
       throw NotImplementedError.new
     end
 
-    def create_playlist(name, description = '', public = false)
-      create_playlists [{name: name, description: description, public: public}]
-    end
-
-    def create_playlists(playlist_descriptions = [])
-      url = 'playlistbatch'
-
-      creates = playlist_descriptions.map do |pd|
-        {
-            create: {
-                creationTimestamp: '-1',
-                deleted: false,
-                lastModifiedTimestamp: '0',
-                name: pd[:name],
-                description: pd[:description],
-                type: 'USER_GENERATED',
-                shareState: (pd[:public] ? 'PUBLIC' : 'PRIVATE')
-            }
-        }
-      end
-
-      options = {
-          body: {mutations: creates}.to_json
-      }
-      make_post_request(url, options)
-    end
-
-    # It should be the actual id, not the share token.
-    def update_playlist(id, new_name = nil, new_description = nil, new_public = nil)
-      update_playlists [{id: id, name: new_name, description: new_description, public: new_public}]
-    end
-
-    def update_playlists(playlist_descriptions)
-      url = 'playlistbatch'
-
-      updates = playlist_descriptions.map do |pd|
-        {
-            update: {
-                id: pd[:id],
-                name: pd[:name],
-                description: pd[:description],
-                shareState: (pd[:public] ? 'PUBLIC' : 'PRIVATE')
-            }
-        }
-      end
-
-      options = {
-          body: {mutations: updates}.to_json
-      }
-
-      make_post_request(url, options)
-    end
-
-    def delete_playlist(id)
-      delete_playlists [id]
-    end
-
-    def delete_playlists(ids = [])
-      url = 'playlistbatch'
-
-      deletes = ids.map do |pd|
-        {
-           delete: pd
-        }
-      end
-
-      options = {
-          body: {mutations: deletes}.to_json
-      }
-
-      make_post_request(url, options)
-
-    end
-
-    # It should be the actual id, not the share token.
-    def add_tracks_to_playlist(playlist_id, track_ids)
-      url = 'plentriesbatch'
-      options = {}
-
-
-      prev_id, cur_id, next_id = nil, SecureRandom.uuid, SecureRandom.uuid
-
-      mutations = []
-      track_ids.each_with_index do |value, index|
-        m_details = {
-            clientId: cur_id,
-            creationTimestamp: '-1',
-            deleted: false,
-            lastModifiedTimestamp: '0',
-            playlistId: playlist_id,
-            source: 1,
-            trackId: value,
-        }
-
-        m_details[:source] = 2 if value[0] == 'T'
-
-        m_details[:precedingEntryId] = prev_id if index > 0
-
-        m_details[:followingEntryId] = next_id if index < value.length - 1
-
-        mutations << {create: m_details}
-
-        prev_id, cur_id, next_id = cur_id, next_id, SecureRandom.uuid
-      end
-
-
-      options[:body] = {mutations: mutations}.to_json
-
-      make_post_request(url, options)
-    end
-
-
-    #it has to be a playlist entry id, not a track id
-    def remove_tracks_from_playlist(playlist_entry_ids)
-      url = 'plentriesbatch'
-
-      mutations = playlist_entry_ids.map { |id| {delete: id}}
-      options = {
-          body: {
-              mutations: mutations
-          }.to_json
-      }
-
-      make_post_request url, options
-    end
-
-    def reorder_playlist_entry
-      throw NotImplementedError.new
-    end
 
     def create_station
       throw NotImplementedError.new
@@ -377,14 +225,6 @@ module GoogleMusicApi
 
     def authorization_token
       @authorization_token
-    end
-
-    def add_track_type(track_id)
-      if track_id[0] == 'T'
-        {'id': track_id, 'type': 1}
-      else
-        {'id': track_id, 'type': 0}
-      end
     end
 
   end
