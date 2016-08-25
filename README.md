@@ -4,6 +4,7 @@ This is a port of Simon Webber's cool [`gmusicapi`](https://github.com/simon-web
 only implements the `MobileClient` methods. I don't have any plans to add support for `Webclient` or `MusicManager` at 
 this moment, but I would welcome anybody who wants to add it. 
 
+[![Gem Version](https://badge.fury.io/rb/google_music_api.svg)](https://badge.fury.io/rb/google_music_api)
 
 ## Notes
 Google Two-Factor Authentication is not supported at the moment, you will have to create a app 
