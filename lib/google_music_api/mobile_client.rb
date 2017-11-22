@@ -14,9 +14,9 @@ module GoogleMusicApi
     SERVICE = 'sj'
     APP = 'com.google.android.music'
     CLIENT_SIGNATURE = '38918a453d07199354f8b19af05ec6562ced5788'
-
+    STREAM_ENDPOINT = 'https://mclients.googleapis.com/music/'
     SERVICE_ENDPOINT = 'https://mclients.googleapis.com/sj/v2.4/'
-
+  
     include Http
     include Genre
     include Playlist
@@ -28,8 +28,9 @@ module GoogleMusicApi
 
     #Pass an authorization token and you won't have to login
     # @param [string] authorization_token
-    def initialize(authorization_token = nil)
+    def initialize(authorization_token = nil, dev_id = nil)
       @authorization_token = authorization_token
+      @dev_id = dev_id
     end
 
 
@@ -48,9 +49,9 @@ module GoogleMusicApi
 
       response = g.master_login(email, password)
       oauth_response = g.oauth(email, response['Token'], SERVICE, APP, CLIENT_SIGNATURE)
-
       raise AuthenticationError.new('Invalid username/password') unless oauth_response.key?('Auth')
       @authorization_token = oauth_response['Auth']
+      @dev_id = android_id
       true
     end
 
