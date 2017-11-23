@@ -29,10 +29,11 @@ module GoogleMusicApi
       if salt == nil
         salt = (Time.now.to_i * 1000).to_s
       end
+      
       hmac = OpenSSL::HMAC.new(get_key,OpenSSL::Digest.new('sha1'))
       hmac << data.force_encoding("utf-8")
       hmac << salt.force_encoding("utf-8")
-      sig =Base64.urlsafe_encode64(hmac.digest).chop
+      sig = Base64.urlsafe_encode64(hmac.digest).chop
       
       return sig,salt
     end
