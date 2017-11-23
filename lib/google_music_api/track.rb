@@ -5,9 +5,11 @@ module GoogleMusicApi
     #Gets details about a track
     # @param [string] track_id
     # @return [hash] describing the track
+
     def get_key
       @key = Base64.decode64('MzRlZTc5ODMtNWVlNi00MTQ3LWFhODYtNDQzZWEwNjJhYmY3NzQ0OTNkNmEtMmExNS00M2ZlLWFhY2UtZTc4NTY2OTI3NTg1Cg==')
     end
+
     def get_track_info(track_id)
       url = 'fetchtrack'
 
@@ -44,9 +46,9 @@ module GoogleMusicApi
         query: {
           'opt': quality,
           'net': 'mob',
-         'pt': 'e',
+          'pt': 'e',
           'slt': salt,
-         'sig': sig
+          'sig': sig
         },
         headers: {
           'X-Device-ID': device_id
@@ -56,7 +58,7 @@ module GoogleMusicApi
         # Store track or podcast episode.
         options[:query]['mjck'] = track_id
       else
-        options['query']['songid'] = track_id    
+        options[:query]['songid'] = track_id    
       end
       make_play_request url, options
     end
