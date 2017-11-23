@@ -7,6 +7,7 @@ require 'google_music_api/station'
 require 'google_music_api/album'
 require 'google_music_api/artist'
 require 'google_music_api/track'
+require 'google_music_api/podcast'
 
 module GoogleMusicApi
   class MobileClient
@@ -25,6 +26,7 @@ module GoogleMusicApi
     include Album
     include Artist
     include Track
+    include Podcast
 
     #Pass an authorization token and you won't have to login
     # @param [string] authorization_token
