@@ -12,7 +12,8 @@ module GoogleMusicApi
           query: {
               nid: album_id,
               'include-tracks': include_tracks
-          }
+          },
+          headers: {}
       }
 
       make_get_request(url, options)
