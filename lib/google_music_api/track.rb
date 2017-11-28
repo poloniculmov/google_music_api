@@ -1,4 +1,4 @@
-require "base64"
+require 'base64'
 require 'openssl'
 require 'google_music_api/util'
 module GoogleMusicApi
@@ -23,9 +23,8 @@ module GoogleMusicApi
       make_get_request url, options
     end
 
-    def get_track_stream(track_id, device_id = @dev_id, quality = 'hi')
-      url = 'mplay'
-      
+    def get_track_stream(track_id, device_id = @dev_id, quality = 'hi',url='mplay')
+
       sig,salt=get_signature(track_id)
       
       options = {
